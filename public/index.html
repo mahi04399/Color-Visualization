@@ -8,28 +8,45 @@
       margin: 0;
       overflow: hidden;
     }
+
+    pre {
+      font-size: 5rem;
+    }
   </style>
   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script src="https://unpkg.com/d3@7.8.5/dist/d3.min.js"></script>
   <link rel="shortcut icon" href="https://www.seoptimer.com/storage/images/2018/09/favicon-1.png">
-  <script>
-    const getCsvData = async (url) => {
-      const response = await fetch(url);
-      const text = await response.text();
-      console.log(text);
-
-      // fetch(url).then(response => {
-      //   response.text().then(text => {
-      //     console.log(text);
-      //   });
-      // });
-    }
-    const csvUrl = "https://gist.githubusercontent.com/mahi04399/8208353efce56759375990f3922faac8/raw/css-color.csv";
-    getCsvData(csvUrl);
-  </script>
 </head>
 
 <body>
-  <div id="root">Hello React and D3</div>
+  <pre id="message-container"></pre>
+
+  <script>
+    const getCsvData = async (url) => {
+      const response = await fetch(url);
+      return await response.text();
+    }
+    const csvUrl = "https://gist.githubusercontent.com/mahi04399/8208353efce56759375990f3922faac8/raw/css-color.csv";
+
+    d3.csv(csvUrl).then(data => {
+      let message = "";
+      message = message + Math.round(d3.csvFormat(data).length / 1024) + " kB\n";
+      message = message + data.length + " rows\n";
+      message = message + data.columns.length + " columns";
+      document.getElementById('message-container').textContent = message;
+    });
+
+    // using fetch() and csvParse()
+    // getCsvData(csvUrl).then(text => {
+    //   const data = d3.csvParse(text);
+    //   let message = "";
+    //   message = message + Math.round(text.length / 1024) + " kB\n";
+    //   message = message + data.length + " rows\n";
+    //   message = message + data.columns.length + " columns";
+    //   document.getElementById('message-container').textContent = message;
+    // })
+
+  </script>
 </body>
 
 </html>
