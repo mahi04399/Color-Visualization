@@ -22,10 +22,6 @@
   <pre id="message-container"></pre>
 
   <script>
-    const getCsvData = async (url) => {
-      const response = await fetch(url);
-      return await response.text();
-    }
     const csvUrl = "https://gist.githubusercontent.com/mahi04399/8208353efce56759375990f3922faac8/raw/css-color.csv";
 
     d3.csv(csvUrl).then(data => {
@@ -37,6 +33,10 @@
     });
 
     // using fetch() and csvParse()
+    // const getCsvData = async (url) => {
+    //   const response = await fetch(url);
+    //   return await response.text();
+    // }
     // getCsvData(csvUrl).then(text => {
     //   const data = d3.csvParse(text);
     //   let message = "";
